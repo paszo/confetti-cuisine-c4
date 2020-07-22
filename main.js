@@ -4,6 +4,7 @@ const errorController = require('./controllers/errorController');
 const subscribersController = require('./controllers/subscribersController');
 const layouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
+const methodOverride = require('method-override');
 
 mongoose.Promise = global.Promise;
 
@@ -20,6 +21,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded( {extended: false}));
 app.use(express.json());
 app.use(layouts);
+app.use(methodOverride("_method", {methods: ["POST", "GET"]}));
 
 app.get("/", homeController.showHome);
 app.get("/courses", homeController.showCourses);
