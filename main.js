@@ -2,6 +2,7 @@ const express = require('express');
 const homeController = require('./controllers/homeController');
 const errorController = require('./controllers/errorController');
 const subscribersController = require('./controllers/subscribersController');
+const usersController = require('./controllers/usersController');
 const layouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
@@ -15,10 +16,18 @@ router.get("/subscribers/:id/edit", subscribersController.edit);
 router.put("/subscribers/:id/update", subscribersController.update, subscribersController.redirectView);
 router.delete("/subscribers/:id/delete", subscribersController.delete, subscribersController.redirectView);
 
+router.get("/users", usersController.index, usersController.indexView);
+router.get("/users/new", usersController.new);
+router.post("/users/create", usersController.create, usersController.redirectView);
+router.get("/users/:id", usersController.show, usersController.showView);
+router.get("/users/:id/edit", usersController.edit);
+router.put("/users/:id/update", usersController.update, usersController.redirectView);
+router.delete("/users/:id/delete", usersController.delete, usersController.redirectView);
+
 mongoose.Promise = global.Promise;
 
 const dbstring = process.env.CONFETTIDB;
-mongoose.connect(dbstring, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(dbstring, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false});
 
 
 const app = express();
