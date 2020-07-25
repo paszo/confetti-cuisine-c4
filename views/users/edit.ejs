@@ -1,6 +1,6 @@
 <div class="data-form">
     <form action="<%= `/users/${user._id}/update?_method=PUT`%>" method="POST">
-        <h2>Create a new user:</h2>
+        <h2>Update a user:</h2>
         <div>
             <label for="firstName">First name</label>
             <input type="text" name="firstName" id="firstName" value="<%= user.name.first %>" placeholder="First name" autofocus>

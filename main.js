@@ -3,6 +3,7 @@ const homeController = require('./controllers/homeController');
 const errorController = require('./controllers/errorController');
 const subscribersController = require('./controllers/subscribersController');
 const usersController = require('./controllers/usersController');
+const coursesController = require('./controllers/coursesController');
 const layouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
@@ -24,6 +25,15 @@ router.get("/users/:id/edit", usersController.edit);
 router.put("/users/:id/update", usersController.update, usersController.redirectView);
 router.delete("/users/:id/delete", usersController.delete, usersController.redirectView);
 
+router.get("/courses", coursesController.index, coursesController.indexView);
+router.get("/courses/new", coursesController.new);
+router.post("/courses/create", coursesController.create, coursesController.redirectView);
+router.get("/courses/:id", coursesController.show, coursesController.showView);
+router.get("/courses/:id/edit", coursesController.edit);
+router.put("/courses/:id/update", coursesController.update, coursesController.redirectView);
+router.delete("/courses/:id/delete", coursesController.delete, coursesController.redirectView);
+
+
 mongoose.Promise = global.Promise;
 
 const dbstring = process.env.CONFETTIDB;
@@ -43,10 +53,6 @@ app.use(methodOverride("_method", {methods: ["POST", "GET"]}));
 app.use("/", router);
 
 app.get("/", homeController.showHome);
-app.get("/courses", homeController.showCourses);
-// app.get("/contact", subscribersController.getSubscriptionPage);
-// app.post("/contact", homeController.postedSignUpForm);
-
 
 app.use(errorController.pageNotFoundError);
 app.use(errorController.internalServerError);
